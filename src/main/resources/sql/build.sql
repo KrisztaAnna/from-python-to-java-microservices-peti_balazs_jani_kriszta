@@ -17,5 +17,5 @@ product_name VARCHAR,
 comment varchar,
 ratings INTEGER,
 review_key VARCHAR,
-FOREIGN KEY (client_id) REFERENCES client(id),
+FOREIGN KEY (client_id) REFERENCES client(id)
 );
