@@ -1,6 +1,6 @@
 package com.codecool.reviewservice.dao.implementation;
 
-import com.codecool.reviewservice.dao.Connection.DBConnection;
+import com.codecool.reviewservice.dao.connection.DBConnection;
 import com.codecool.reviewservice.dao.ReviewDao;
 import com.codecool.reviewservice.model.Review;
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ public class ReviewDaoJdbc implements ReviewDao {
     private static final Logger logger = LoggerFactory.getLogger(ReviewDaoJdbc.class);
     private DBConnection connection = new DBConnection();
     private static ReviewDaoJdbc instance = null;
-    public ArrayList<Review> reviews = new ArrayList<>();
+//    public ArrayList<Review> reviews = new ArrayList<>();
     private String sql;
 
     public static ReviewDaoJdbc getInstance(){
@@ -89,6 +89,7 @@ public class ReviewDaoJdbc implements ReviewDao {
     }
 
     private ArrayList<Review> createReviewModel(String sql){
+        ArrayList<Review> reviews = new ArrayList<>();
         try (Connection conn = connection.connect();
              Statement statement = conn.createStatement();
              ResultSet rs = statement.executeQuery(sql)){
