@@ -45,16 +45,16 @@ public class ReviewController {
         } else {
             throw new InvalidClient("Client is not found in database.");
         }
-
     }
 
-    public static void changeStatus(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
+    public static String changeStatus(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
         String APIKey = request.params("APIKey");
 
         if (validateClient(APIKey)) {
             String reviewKey = request.params("reviewKey");
             String status = request.params("status");
-            reviews.updateReview(reviewKey, status);
+            reviews.updateStatus(reviewKey, status);
+            return null;
         } else {
             throw new InvalidClient("Client is not found in database.");
         }
