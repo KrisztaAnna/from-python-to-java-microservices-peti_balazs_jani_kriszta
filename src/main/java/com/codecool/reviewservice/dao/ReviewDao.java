@@ -11,4 +11,5 @@ public interface ReviewDao {
     ArrayList<Review> getByProductName(String productName);
     ArrayList<Review> getApprovedByClientId(int clientID);
     ArrayList<Review> getApprovedByProductName(String productName);
+    void updateStatus(String review_key, String newStatus);
 }
