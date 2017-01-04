@@ -42,4 +42,5 @@ crashlytics-build.properties
 fabric.properties
 .idea/
 from-python-to-java-microservices-peti_balazs_jani_kriszta.iml
+*.iml
 target/
