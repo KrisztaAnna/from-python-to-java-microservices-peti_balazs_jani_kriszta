@@ -6,6 +6,7 @@ import com.codecool.reviewservice.dao.implementation.ClientDaoJdbc;
 import com.codecool.reviewservice.dao.implementation.ReviewDaoJdbc;
 import com.codecool.reviewservice.email.EmailAPIService;
 import com.codecool.reviewservice.errorHandling.InvalidClient;
+import com.codecool.reviewservice.model.Client;
 import com.codecool.reviewservice.model.Review;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
@@ -27,23 +28,19 @@ public class ReviewController {
 
     public static String createReview(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
         String email;
+
         String APIKey = request.params("APIKey");
-        String productName = request.params("productName");
-        String comment = request.params("comment");
-        int ratings =  Integer.parseInt(request.params("ratings"));
-        int clientID = (Integer)reviews.getBy(APIKey);
+        Client client = clients.getByAPIKey(APIKey);
+        Integer clientID = client.getId();
 
-        if (clientID == 0) {
-            throw new InvalidClient("Client not found");
-            return null;
-        } else {
-            Review newReview = new Review(clientID, productName, comment, ratings);
-            email = newReview.toString();
-            EmailAPIService.sendReviewForModerating(email);
-            return null;
-        }
+        Review newReview = new Review(clientID,
+                                      request.params("productName"),
+                                      request.params("comment"),
+                                      Integer.parseInt(request.params("ratings")));
+        email = newReview.toString();
+        EmailAPIService.sendReviewForModerating(email);
+        return null;
     }
-
 
     public static String changeStatus(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
         Review moderatedReview;
@@ -52,29 +49,30 @@ public class ReviewController {
         String reviewKey = request.params("reviewKey");
         String status = request.params("status");
 
-        int clientID = clients.getBy(APIKey);
 
-        if (clientID == 0) {
-            throw new InvalidClient("Client not found in database");
-            return null;
-        } else {
-            moderatedReview = reviews.getBy(reviewKey);
-            moderatedReview.setStatus(status);
-            return null;
-        }
+        Client client = clients.getByAPIKey(APIKey);
+        Integer clientID = client.getId();
+
+        moderatedReview = reviews.getBy(reviewKey);
+        moderatedReview.setStatus(status);
+        return null;
+
     }
 
     public static String getAllReviewFromClient(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
         ArrayList<String> reviewsOfClient = new ArrayList<>();
 
         String APIKey = request.params("APIKey");
-        int clientID = (Integer) clients.getBy(APIKey);
+
+
+
+        int clientID = (int)clients.getByAPIKey(APIKey).getId();
 
         if (clientID == 0) {
             throw new InvalidClient("Client not found in database");
             return null;
         } else {
-            ArrayList<Review> returnReviews = reviews.getBy(clientID);
+            ArrayList<Review> returnReviews = reviews.getApprovedByClientId(clientID);
             for (Review review : returnReviews) {
                 reviewsOfClient.add(review.toString());
             }
@@ -87,7 +85,7 @@ public class ReviewController {
         String productName = request.params("productName");
         ArrayList<String> approvedReviews = new ArrayList<>();;
 
-        int clientID = (Integer) clients.getBy(APIKey);
+        int clientID = (Integer)clients.getByAPIKey(APIKey).getId();
 
         if (clientID == 0) {
             throw new InvalidClient("Client not found in database");
@@ -99,6 +97,14 @@ public class ReviewController {
             }
             return jsonify(approvedReviews);
         }
+    }
+
+    private static boolean validateClient(String APIKey) {
+        Client client = clients.getByAPIKey(APIKey);
+        if (client == null) {
+            return false;
+        }
+        return true;
     }
 
     private static String jsonify(ArrayList<String> list) {
