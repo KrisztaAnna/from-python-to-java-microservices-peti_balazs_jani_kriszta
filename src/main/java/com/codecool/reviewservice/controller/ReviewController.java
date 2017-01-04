@@ -16,7 +16,6 @@ import spark.Response;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -62,7 +61,7 @@ public class ReviewController {
         ArrayList<String> reviewsOfClient = new ArrayList<>();
 
         String APIKey = request.params("APIKey");
-        
+
         if (!validateClient(APIKey)) {
             throw new InvalidClient("Client is not found in database.");
         } else {
@@ -77,15 +76,13 @@ public class ReviewController {
     public static String getAllReviewOfProduct(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
         String APIKey = request.params("APIKey");
         String productName = request.params("productName");
-        ArrayList<String> approvedReviews = new ArrayList<>();;
 
-        int clientID = (Integer)clients.getByAPIKey(APIKey).getId();
+        ArrayList<String> approvedReviews = new ArrayList<>();
 
-        if (clientID == 0) {
-            throw new InvalidClient("Client not found in database");
-            return null;
+        if (!validateClient(APIKey)) {
+            throw new InvalidClient("Client is not found in database.");
         } else {
-            ArrayList<Review> returnReviews = reviews.getApprovedReviewsBy(productName);
+            ArrayList<Review> returnReviews = reviews.getApprovedByProductName(productName);
             for (Review review : returnReviews) {
                 approvedReviews.add(review.toString());
             }
