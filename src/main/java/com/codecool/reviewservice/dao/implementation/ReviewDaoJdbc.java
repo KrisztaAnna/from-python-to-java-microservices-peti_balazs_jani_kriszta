@@ -3,6 +3,8 @@ package com.codecool.reviewservice.dao.implementation;
 import com.codecool.reviewservice.dao.Connection.DBConnection;
 import com.codecool.reviewservice.dao.ReviewDao;
 import com.codecool.reviewservice.model.Review;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ReviewDaoJdbc implements ReviewDao {
+    private static final Logger logger = LoggerFactory.getLogger(ReviewDaoJdbc.class);
     private DBConnection connection = new DBConnection();
     private static ReviewDaoJdbc instance = null;
     private String sql;
@@ -17,6 +20,7 @@ public class ReviewDaoJdbc implements ReviewDao {
     public static ReviewDaoJdbc getInstance(){
         if (instance == null){
             instance = new ReviewDaoJdbc();
+            logger.info("Create a new ReviewDaoJdbc Singleton "+instance);
         }
         return instance;
     }
@@ -30,23 +34,28 @@ public class ReviewDaoJdbc implements ReviewDao {
 
         sql = "INSERT INTO review (client_id, product_name, comment, ratings, review_key) " +
                 "VALUES("+clientId+",'"+productName+"','"+comment+"',"+ratings+",'"+reviewKey+"');";
-        connection.executeQuery(sql);
+        executeQuery(sql);
+        logger.debug("Save to database | Review model: "+reviewModel);
     }
 
-    public void remove(int id) {
-
+    public void remove(int reviewKey) {
+        sql = "DELETE FROM review WHERE review_key='"+reviewKey+"';";
+        executeQuery(sql);
+        logger.debug("Delete from database | ReviewKey: "+reviewKey);
     }
 
     public Review getByClientID(int clientID) {
         sql = "SELECT * FROM review WHERE id="+clientID+";";
+        logger.debug("Get a review by client_id("+clientID+") | Review model: "+createReviewModel(sql));
         return createReviewModel(sql);
     }
 
     public Review getByProductName(String productName) {
         sql = "SELECT * FROM review WHERE id='"+productName+"';";
+        logger.debug("Get a review by product_name("+productName+") | Review model: "+createReviewModel(sql));
         return createReviewModel(sql);
     }
-//    TODO: MODIFY the return to client object
+
     private int getClientId(int clientId){
         sql = "SELECT id FROM client WHERE id="+clientId+";";
         try (Connection conn = connection.connect();
@@ -75,5 +84,9 @@ public class ReviewDaoJdbc implements ReviewDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void executeQuery(String sql){
+        connection.executeQuery(sql);
     }
 }
