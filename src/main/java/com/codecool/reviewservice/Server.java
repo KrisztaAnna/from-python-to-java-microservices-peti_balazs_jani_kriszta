@@ -23,15 +23,16 @@ public class Server {
 
         // Default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
-//        staticFileLocation("/public");
+        staticFileLocation("/public");
         port(8888);
 
         // Routes
-        get("/newClient/:name/:email", (request, response) -> ClientController.newClient(request, response));
+        get("/newClient", (request, response) -> ClientController.newClient(request, response));
         get("/review/:APIKey/:productName/:comment/:ratings", (request, response) -> ReviewController.createReview(request, response));
         get("/changeStatus/:APIKey/:reviewKey/:status", (request, response) -> ReviewController.changeStatus(request, response));
         get("/reviewFromClient/:APIKey", (request, response) -> ReviewController.getAllReviewFromClient(request, response));
         get("/allReviewOfProduct/:APIKey/:ProductName", (request, response) -> ReviewController.getAllReviewOfProduct(request, response));
         get("/", RegistrationPageController::renderRegistrationPage, tmp);
+        get("/success",  (req, res) -> "Successful registration");
     }
 }

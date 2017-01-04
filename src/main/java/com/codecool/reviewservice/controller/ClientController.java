@@ -13,15 +13,13 @@ public class ClientController {
     private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
     private static ClientDao clientDao = ClientDaoJdbc.getInstance();
 
-
     // create new client & save it to the database & sending registration email
     // TODO: 2017.01.04. integrate email sending service
     public static ModelAndView newClient(Request request, Response response){
-        System.out.println("ujkliens");
-
-        Client newClient = new Client(request.params("name"), request.params("email"));
+        Client newClient = new Client(request.queryParams("name"), request.queryParams("email"));
         logger.info("New client created: {}", newClient.toString());
         clientDao.add(newClient);
-        return new ModelAndView(null, "registration");
+        response.redirect("/success");
+        return null;
     }
 }

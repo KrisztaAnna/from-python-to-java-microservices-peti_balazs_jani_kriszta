@@ -4,7 +4,6 @@ import com.codecool.reviewservice.dao.ClientDao;
 import com.codecool.reviewservice.dao.ReviewDao;
 import com.codecool.reviewservice.dao.implementation.ClientDaoJdbc;
 import com.codecool.reviewservice.dao.implementation.ReviewDaoJdbc;
-import com.codecool.reviewservice.email.EmailAPIService;
 import com.codecool.reviewservice.errorHandling.InvalidClient;
 import com.codecool.reviewservice.model.Client;
 import com.codecool.reviewservice.model.Review;
@@ -27,6 +26,7 @@ public class ReviewController {
 
 
     public static String createReview(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
+        System.out.println("kaki");
         String email;
 
         String APIKey = request.params("APIKey");
@@ -38,20 +38,22 @@ public class ReviewController {
                     request.params("productName"),
                     request.params("comment"),
                     Integer.parseInt(request.params("ratings")));
+            reviews.add(newReview);
             email = newReview.toString();
-            EmailAPIService.sendReviewForModerating(email);
-            return null;
+//            EmailAPIService.sendReviewForModerating(email);
+            return new Gson().toJson(email);
         }
     }
 
     public static String changeStatus(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
+        System.out.println("kaki");
         String APIKey = request.params("APIKey");
 
         if (!validateClient(APIKey)) {
             throw new InvalidClient("Client is not found in database.");
         } else {
             String reviewKey = request.params("reviewKey");
-            String status = request.params("status");
+            String status = request.params("status").toUpperCase();
             reviews.updateStatus(reviewKey, status);
             return null;
         }
@@ -82,7 +84,7 @@ public class ReviewController {
         if (!validateClient(APIKey)) {
             throw new InvalidClient("Client is not found in database.");
         } else {
-            ArrayList<Review> returnReviews = reviews.getApprovedByProductName(productName);
+            ArrayList<Review> returnReviews = reviews.getApprovedByProductName(productName.replace(" ", "").toUpperCase());
             for (Review review : returnReviews) {
                 approvedReviews.add(review.toString());
             }
