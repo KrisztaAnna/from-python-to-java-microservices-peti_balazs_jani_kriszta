@@ -16,6 +16,7 @@ import spark.Response;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -31,32 +32,29 @@ public class ReviewController {
 
         String APIKey = request.params("APIKey");
 
-        if (validateClient(APIKey)) {
-            Client client = clients.getByAPIKey(APIKey);
-            Integer clientID = client.getId();
-
-            Review newReview = new Review(clientID,
+        if (!validateClient(APIKey)) {
+            throw new InvalidClient("Client is not found in database.");
+        } else {
+            Review newReview = new Review(getClientID(APIKey),
                     request.params("productName"),
                     request.params("comment"),
                     Integer.parseInt(request.params("ratings")));
             email = newReview.toString();
             EmailAPIService.sendReviewForModerating(email);
             return null;
-        } else {
-            throw new InvalidClient("Client is not found in database.");
         }
     }
 
     public static String changeStatus(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
         String APIKey = request.params("APIKey");
 
-        if (validateClient(APIKey)) {
+        if (!validateClient(APIKey)) {
+            throw new InvalidClient("Client is not found in database.");
+        } else {
             String reviewKey = request.params("reviewKey");
             String status = request.params("status");
             reviews.updateStatus(reviewKey, status);
             return null;
-        } else {
-            throw new InvalidClient("Client is not found in database.");
         }
     }
 
@@ -64,16 +62,11 @@ public class ReviewController {
         ArrayList<String> reviewsOfClient = new ArrayList<>();
 
         String APIKey = request.params("APIKey");
-
-
-
-        int clientID = (int)clients.getByAPIKey(APIKey).getId();
-
-        if (clientID == 0) {
-            throw new InvalidClient("Client not found in database");
-            return null;
+        
+        if (!validateClient(APIKey)) {
+            throw new InvalidClient("Client is not found in database.");
         } else {
-            ArrayList<Review> returnReviews = reviews.getApprovedByClientId(clientID);
+            ArrayList<Review> returnReviews = reviews.getApprovedByClientId(getClientID(APIKey));
             for (Review review : returnReviews) {
                 reviewsOfClient.add(review.toString());
             }
@@ -106,6 +99,10 @@ public class ReviewController {
             return false;
         }
         return true;
+    }
+
+    private static int getClientID(String APIKey){
+        return clients.getByAPIKey(APIKey).getId();
     }
 
     private static String jsonify(ArrayList<String> list) {
