@@ -64,6 +64,11 @@ public class ReviewDaoJdbc implements ReviewDao {
         logger.debug("Get a review by product_name "+productName+" if status is APPROVED | Review model: "+createReviewModel(sql));
         return createReviewModel(sql);
     }
+    public ArrayList<Review> getApprovedByClientId(int clientID) {
+        sql = "SELECT * FROM review WHERE client_id="+clientID+" and status='APPROVED';";
+        logger.debug("Get a review by client_id "+clientID+" if status is APPROVED | Review model: "+createReviewModel(sql));
+        return createReviewModel(sql);
+    }
 
     private int getClientId(int clientId){
         sql = "SELECT id FROM client WHERE id="+clientId+";";
