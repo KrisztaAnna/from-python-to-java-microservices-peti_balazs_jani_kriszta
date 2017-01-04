@@ -1,4 +1,4 @@
-package com.codecool.reviewservice.dao.implementation;
+package dao.implementation;
 
 import org.junit.After;
 import org.junit.Before;
