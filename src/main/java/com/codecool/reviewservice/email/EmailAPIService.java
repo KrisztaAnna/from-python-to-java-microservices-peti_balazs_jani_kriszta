@@ -25,6 +25,10 @@ public class EmailAPIService {
         return execute(builder.build());
     }
 
+    public static String sendNewAPIKey(String email) throws URISyntaxException, IOException {
+        return null;
+    }
+
     private static String execute(URI uri) throws IOException {
         return Request.Get(uri)
                 .execute()
