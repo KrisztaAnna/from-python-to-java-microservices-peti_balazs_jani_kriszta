@@ -1,13 +1,17 @@
 package com.codecool.reviewservice;
 
+//import com.codecool.reviewservice.controller.Controller;
 import com.codecool.reviewservice.controller.ReviewController;
+import com.codecool.reviewservice.dao.connection.DBConnection;
+
+import java.sql.SQLException;
 
 import static spark.Spark.*;
 
 public class Server {
 
-    public static void main(String[] args) {
-        // Connection to PostgreSQL Database
+    public static void main(String[] args) throws SQLException {
+        // connection to PostgreSQL Database
         DBConnection dbConnection = new DBConnection();
         dbConnection.connect();
 
@@ -17,9 +21,9 @@ public class Server {
         port(8888);
 
         // Routes
-        get("review/:APIKey/:productName/:comment/:rating", ReviewController.createReview);
-        get("changeStatus/:reviewKey/:status", ReviewController.changeStatus);
-        get("reviewFromClient/:APIKey", ReviewController.getAllREviewFromClient);
-        get("allReviewOfProduct/:ProductName", ReviewController.getAllReviewOfProduct);
+        get("/review/:APIKey/:productName/:comment/:ratings", (request, response) -> ReviewController.createReview(request, response));
+        get("/changeStatus/:reviewKey/:status", (request, response) -> ReviewController.changeStatus(request, response));
+        get("reviewFromClient/:APIKey", (request, response) -> ReviewController.getAllReviewFromClient(request, response));
+        get("allReviewOfProduct/:ProductName", (request, response) -> ReviewController.getAllReviewOfProduct(request, response));
     }
 }
