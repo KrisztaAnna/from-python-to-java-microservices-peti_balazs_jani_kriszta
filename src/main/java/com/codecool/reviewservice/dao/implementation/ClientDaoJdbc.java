@@ -32,28 +32,28 @@ public class ClientDaoJdbc implements ClientDao {
         String email = clientModel.getEmail();
 
         sql = "INSERT INTO client (api_key, name, email)" +
-                "VALUES (" + APIKey + ",'" + name + "', '" + email + " ');";
+                "VALUES(" + APIKey + ", '" + name + "', '" + email + "');";
         logger.debug("Saving to database: {}", clientModel);
         executeQuery(sql);
     }
 
     @Override
     public void remove(String APIKey) {
-        sql = "DELETE FROM client WHERE APIKey = '" + APIKey + "';";
+        sql = "DELETE FROM client WHERE APIKey='" + APIKey + "';";
         logger.debug("Deleting client with API key {}", APIKey);
         executeQuery(sql);
     }
 
     @Override
     public Client getById(int id) {
-        sql = "SELECT * FROM client WHERE id = " + id + "';";
+        sql = "SELECT * FROM client WHERE id='" + id + "';";
         logger.debug("Selecting client with id {}", id);
         return createClientModel(sql);
     }
 
     @Override
     public Client getByAPIKey(String APIKey) {
-        sql = "SELECT * FROM client WHERE id = " + APIKey + "';";
+        sql = "SELECT * FROM client WHERE id='" + APIKey + "';";
         logger.debug("Selecting client with API key {}", APIKey);
         return createClientModel(sql);
     }
