@@ -69,7 +69,11 @@ public class ReviewDaoJdbc implements ReviewDao {
         logger.debug("Get a review by client_id "+clientID+" if status is APPROVED | Review model: "+createReviewModel(sql));
         return createReviewModel(sql);
     }
-
+    public void updateStatus(String review_key, String newStatus){
+        sql = "UPDATE review SET status='"+newStatus+"' WHERE review_key='"+review_key+"';";
+        executeQuery(sql);
+        logger.info("Update review status where review_key: "+review_key+" | new status: "+newStatus);
+    }
     private int getClientId(int clientId){
         sql = "SELECT id FROM client WHERE id="+clientId+";";
         try (Connection conn = connection.connect();
