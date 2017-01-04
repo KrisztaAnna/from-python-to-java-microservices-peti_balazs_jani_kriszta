@@ -1,7 +1,7 @@
 package com.codecool.reviewservice.dao.implementation;
 
 import com.codecool.reviewservice.dao.ClientDao;
-import com.codecool.reviewservice.dao.Connection.DBConnection;
+import com.codecool.reviewservice.dao.connection.DBConnection;
 import com.codecool.reviewservice.model.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
