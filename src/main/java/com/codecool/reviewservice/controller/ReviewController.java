@@ -5,6 +5,7 @@ import com.codecool.reviewservice.dao.ClientDao;
 import com.codecool.reviewservice.dao.ReviewDao;
 import com.codecool.reviewservice.dao.implementation.ClientDaoJdbc;
 import com.codecool.reviewservice.dao.implementation.ReviewDaoJdbc;
+import com.codecool.reviewservice.email.EmailAPIService;
 import com.codecool.reviewservice.model.Review;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,12 +19,12 @@ import java.net.URISyntaxException;
 public class ReviewController {
     private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
 
-//    private final EmailAPIService emailAPIService;
     private static ReviewDao reviews = ReviewDaoJdbc.getInstance();
     private static ClientDao clients = ClientDaoJdbc.getInstance();
 
 
     public static String createReview(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
+        String email;
         String APIKey = request.params("APIKey");
         String productName = request.params("productName");
         String comment = request.params("comment");
@@ -35,16 +36,30 @@ public class ReviewController {
             return null;
         } else {
             Review newReview = new Review(clientID, productName, comment, ratings);
-            return newReview.toString();
+            email = newReview.toString();
+            EmailAPIService.sendReviewForModerating(email);
+            return null;
         }
     }
 
 
     public static String changeStatus(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
+        Review moderatedReview;
+
+        String APIKey = request.params("APIKey");
         String reviewKey = request.params("reviewKey");
         String status = request.params("status");
 
-        return null;
+        int clientID = reviews.getBy(APIKey);
+
+        if (clientID == 0) {
+            throw new InvalidClient("Client not found");
+            return null;
+        } else {
+            moderatedReview = reviews.getBy(reviewKey);
+            moderatedReview.setStatus(status);
+            return null;
+        }
     }
 
     public static String getAllReviewFromClient(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
