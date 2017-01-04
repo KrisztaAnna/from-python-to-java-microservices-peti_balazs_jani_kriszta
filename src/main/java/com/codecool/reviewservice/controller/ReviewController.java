@@ -1,6 +1,6 @@
 package com.codecool.reviewservice.controller;
 
-import com.codecool.reviewservice.clienterror.InvalidClient;
+import com.codecool.reviewservice.errorHandling.InvalidClient;
 import com.codecool.reviewservice.dao.ClientDao;
 import com.codecool.reviewservice.dao.ReviewDao;
 import com.codecool.reviewservice.dao.implementation.ClientDaoJdbc;
@@ -63,6 +63,7 @@ public class ReviewController {
     }
 
     public static String getAllReviewFromClient(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
+
         return null;
     }
 

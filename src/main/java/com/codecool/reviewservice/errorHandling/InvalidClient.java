@@ -1,4 +1,4 @@
-package com.codecool.reviewservice.clienterror;
+package com.codecool.reviewservice.errorHandling;
 
 import java.sql.SQLException;
 
