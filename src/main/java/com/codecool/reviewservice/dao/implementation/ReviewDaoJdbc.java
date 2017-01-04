@@ -54,8 +54,14 @@ public class ReviewDaoJdbc implements ReviewDao {
     }
 
     public ArrayList<Review> getByProductName(String productName) {
-        sql = "SELECT * FROM review WHERE id='"+productName+"';";
+        sql = "SELECT * FROM review WHERE product_name='"+productName+"';";
         logger.debug("Get a review by product_name("+productName+") | Review model: "+createReviewModel(sql));
+        return createReviewModel(sql);
+    }
+
+    public ArrayList<Review> getApprovedByProductName(String productName) {
+        sql = "SELECT * FROM review WHERE product_name='"+productName+"' and status='APPROVED';";
+        logger.debug("Get a review by product_name "+productName+" if status is APPROVED | Review model: "+createReviewModel(sql));
         return createReviewModel(sql);
     }
 
