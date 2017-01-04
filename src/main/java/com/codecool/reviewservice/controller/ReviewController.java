@@ -30,33 +30,34 @@ public class ReviewController {
         String email;
 
         String APIKey = request.params("APIKey");
-        Client client = clients.getByAPIKey(APIKey);
-        Integer clientID = client.getId();
 
-        Review newReview = new Review(clientID,
-                                      request.params("productName"),
-                                      request.params("comment"),
-                                      Integer.parseInt(request.params("ratings")));
-        email = newReview.toString();
-        EmailAPIService.sendReviewForModerating(email);
-        return null;
+        if (validateClient(APIKey)) {
+            Client client = clients.getByAPIKey(APIKey);
+            Integer clientID = client.getId();
+
+            Review newReview = new Review(clientID,
+                    request.params("productName"),
+                    request.params("comment"),
+                    Integer.parseInt(request.params("ratings")));
+            email = newReview.toString();
+            EmailAPIService.sendReviewForModerating(email);
+            return null;
+        } else {
+            throw new InvalidClient("Client is not found in database.");
+        }
+
     }
 
-    public static String changeStatus(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
-        Review moderatedReview;
-
+    public static void changeStatus(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
         String APIKey = request.params("APIKey");
-        String reviewKey = request.params("reviewKey");
-        String status = request.params("status");
 
-
-        Client client = clients.getByAPIKey(APIKey);
-        Integer clientID = client.getId();
-
-        moderatedReview = reviews.getBy(reviewKey);
-        moderatedReview.setStatus(status);
-        return null;
-
+        if (validateClient(APIKey)) {
+            String reviewKey = request.params("reviewKey");
+            String status = request.params("status");
+            reviews.updateReview(reviewKey, status);
+        } else {
+            throw new InvalidClient("Client is not found in database.");
+        }
     }
 
     public static String getAllReviewFromClient(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
