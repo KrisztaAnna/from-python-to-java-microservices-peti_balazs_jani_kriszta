@@ -107,6 +107,3 @@ public class ReviewController {
     }
 
 }
-
-
-//:APIKey/:productName/:comment/:rating"
