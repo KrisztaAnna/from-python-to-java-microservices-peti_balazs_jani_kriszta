@@ -10,11 +10,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class ReviewDaoJdbc implements ReviewDao {
     private static final Logger logger = LoggerFactory.getLogger(ReviewDaoJdbc.class);
     private DBConnection connection = new DBConnection();
     private static ReviewDaoJdbc instance = null;
+    public ArrayList<Review> reviews = new ArrayList<>();
     private String sql;
 
     public static ReviewDaoJdbc getInstance(){
@@ -31,10 +33,11 @@ public class ReviewDaoJdbc implements ReviewDao {
         String comment = reviewModel.getComment();
         int ratings = reviewModel.getRating();
         String reviewKey = reviewModel.getReviewKey();
+        String status = reviewModel.getStatus();
 
-        sql = "INSERT INTO review (client_id, product_name, comment, ratings, review_key) " +
-                "VALUES("+clientId+",'"+productName+"','"+comment+"',"+ratings+",'"+reviewKey+"');";
-        executeQuery(sql);
+        sql = "INSERT INTO review (client_id, product_name, comment, ratings, review_key, status) " +
+                "VALUES("+clientId+",'"+productName+"','"+comment+"',"+ratings+",'"+reviewKey+"', '"+status+"');";
+        connection.executeQuery(sql);
         logger.debug("Save to database | Review model: "+reviewModel);
     }
 
@@ -44,13 +47,13 @@ public class ReviewDaoJdbc implements ReviewDao {
         logger.debug("Delete from database | ReviewKey: "+reviewKey);
     }
 
-    public Review getByClientID(int clientID) {
+    public ArrayList<Review> getByClientID(int clientID) {
         sql = "SELECT * FROM review WHERE id="+clientID+";";
         logger.debug("Get a review by client_id("+clientID+") | Review model: "+createReviewModel(sql));
         return createReviewModel(sql);
     }
 
-    public Review getByProductName(String productName) {
+    public ArrayList<Review> getByProductName(String productName) {
         sql = "SELECT * FROM review WHERE id='"+productName+"';";
         logger.debug("Get a review by product_name("+productName+") | Review model: "+createReviewModel(sql));
         return createReviewModel(sql);
@@ -70,16 +73,21 @@ public class ReviewDaoJdbc implements ReviewDao {
         return 0;
     }
 
-    private Review createReviewModel(String sql){
+    private ArrayList<Review> createReviewModel(String sql){
         try (Connection conn = connection.connect();
              Statement statement = conn.createStatement();
              ResultSet rs = statement.executeQuery(sql)){
-            if (rs.next()){
-                Review review = new Review(rs.getInt("client_id"), rs.getString("product_name"),
-                        rs.getString("comment"), rs.getInt("ratings"), rs.getString("review_key"));
+            if (rs.next()) {
+                Review review = new Review(rs.getInt("client_id"),
+                        rs.getString("product_name"),
+                        rs.getString("comment"),
+                        rs.getInt("ratings"),
+                        rs.getString("review_key"),
+                        rs.getString("status"));
                 review.setId(rs.getString("id"));
-                return review;
+                reviews.add(review);
             }
+                return reviews;
         }catch (SQLException e) {
             e.printStackTrace();
         }
