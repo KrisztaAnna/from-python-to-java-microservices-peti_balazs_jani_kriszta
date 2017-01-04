@@ -30,12 +30,13 @@ public class Review {
     }
 
 //    Constructor with reviewKey
-    public Review(int clientID, String productName, String comment, int rating, String reviewKey) {
+    public Review(int clientID, String productName, String comment, int rating, String reviewKey, String status) {
         this.clientID = clientID;
         this.productName = handleProductName(productName);
         this.comment = comment;
         this.rating = rating;
         this.reviewKey = reviewKey;
+        this.status = status;
 
         logger.info("Create Review model with the reviewKey: " + this.reviewKey + " Status: " + this.status);
 
@@ -85,5 +86,10 @@ public class Review {
 
     public String getReviewKey() {
         return reviewKey;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("id: %s client_id: %s product_name: %s comment: %s ratings: %d review_key: %s status: %s",getId(),getClientID(),getProductName(),getComment(),getRating(),getReviewKey(),getStatus());
     }
 }

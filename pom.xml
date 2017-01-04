@@ -49,6 +49,12 @@
             <version>1.7.22</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4.1212.jre7</version>
+        </dependency>
+
         <!--spark server-->
         <dependency>
             <groupId>com.sparkjava</groupId>
