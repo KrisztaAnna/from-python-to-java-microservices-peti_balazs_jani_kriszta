@@ -104,8 +104,6 @@ public class Email {
         props.put("mail.store.protocol", "pop3");
         props.put("mail.transport.protocol", "smtp");
 
-//        final String username = email.getFROM();
-//        final String password = email.getPassword();
         try {
             Session session = Session.getDefaultInstance(props,
                     new Authenticator() {
