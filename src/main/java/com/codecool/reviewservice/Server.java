@@ -24,7 +24,7 @@ public class Server {
         // Default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFileLocation("/public");
-        port(6543);
+        port(61000);
 
         // Routes
         get("/newClient", (request, response) -> ClientController.newClient(request, response));
