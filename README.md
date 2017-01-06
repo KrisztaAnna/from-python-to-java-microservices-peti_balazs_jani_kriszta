@@ -16,7 +16,8 @@ Review Service by Horseshoe is cross-store review management system. The service
 * `/review/{APIKey}/{productName}/{comment}/{ratings}` -> to send review data from your site to Review Service
 * `/reviewsFromClient/{APIKey}` -> to get all reviews for all products from your store
 * `/review/{APIKey}/{productName}` -> to get all rewiews for a specific product from every store using the same database
-#### Moderation
+
+##### Moderation
 * You will receive an email notification when a new review is submitted on your site. You can either approve or archive it by clicking on the corresponding link in the email, Review Service will do the rest. Only the approved reviews will be displayed on your site.
 
 ---------
