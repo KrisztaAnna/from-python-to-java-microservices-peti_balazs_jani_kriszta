@@ -52,6 +52,7 @@ public class ReviewController {
             String reviewKey = request.params("reviewKey");
             String status = request.params("status").toUpperCase();
             reviews.updateStatus(reviewKey, status);
+            response.redirect("/newStatus");
             return null;
         }
     }
@@ -68,6 +69,7 @@ public class ReviewController {
             for (Review review : returnReviews) {
                 reviewsOfClient.add(review.toString());
             }
+
             return jsonify(reviewsOfClient);
         }
     }
