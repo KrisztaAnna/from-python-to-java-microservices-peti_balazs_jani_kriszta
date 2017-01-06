@@ -1,7 +1,7 @@
 package com.codecool.reviewservice.dao.implementation;
 
 import com.codecool.reviewservice.dao.ClientDao;
-import com.codecool.reviewservice.dao.Connection.DBConnection;
+import com.codecool.reviewservice.dao.connection.DBConnection;
 import com.codecool.reviewservice.model.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,14 +32,14 @@ public class ClientDaoJdbc implements ClientDao {
         String email = clientModel.getEmail();
 
         sql = "INSERT INTO client (api_key, name, email)" +
-                "VALUES(" + APIKey + ", '" + name + "', '" + email + "');";
+                "VALUES('" + APIKey + "', '" + name + "', '" + email + "');";
         logger.debug("Saving to database: {}", clientModel);
         executeQuery(sql);
     }
 
     @Override
     public void remove(String APIKey) {
-        sql = "DELETE FROM client WHERE APIKey='" + APIKey + "';";
+        sql = "DELETE FROM client WHERE api_key='" + APIKey + "';";
         logger.debug("Deleting client with API key {}", APIKey);
         executeQuery(sql);
     }
@@ -53,7 +53,7 @@ public class ClientDaoJdbc implements ClientDao {
 
     @Override
     public Client getByAPIKey(String APIKey) {
-        sql = "SELECT * FROM client WHERE id='" + APIKey + "';";
+        sql = "SELECT * FROM client WHERE api_key='" + APIKey + "';";
         logger.debug("Selecting client with API key {}", APIKey);
         return createClientModel(sql);
     }

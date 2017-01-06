@@ -1,4 +1,4 @@
-package com.codecool.reviewservice.dao.Connection;
+package com.codecool.reviewservice.dao.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

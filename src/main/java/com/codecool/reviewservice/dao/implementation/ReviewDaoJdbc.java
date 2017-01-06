@@ -1,6 +1,6 @@
 package com.codecool.reviewservice.dao.implementation;
 
-import com.codecool.reviewservice.dao.Connection.DBConnection;
+import com.codecool.reviewservice.dao.connection.DBConnection;
 import com.codecool.reviewservice.dao.ReviewDao;
 import com.codecool.reviewservice.model.Review;
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ public class ReviewDaoJdbc implements ReviewDao {
     private static final Logger logger = LoggerFactory.getLogger(ReviewDaoJdbc.class);
     private DBConnection connection = new DBConnection();
     private static ReviewDaoJdbc instance = null;
-    public ArrayList<Review> reviews = new ArrayList<>();
+//    public ArrayList<Review> reviews = new ArrayList<>();
     private String sql;
 
     public static ReviewDaoJdbc getInstance(){
@@ -69,7 +69,11 @@ public class ReviewDaoJdbc implements ReviewDao {
         logger.debug("Get a review by client_id "+clientID+" if status is APPROVED | Review model: "+createReviewModel(sql));
         return createReviewModel(sql);
     }
-
+    public void updateStatus(String review_key, String newStatus){
+        sql = "UPDATE review SET status='"+newStatus+"' WHERE review_key='"+review_key+"';";
+        executeQuery(sql);
+        logger.info("Update review status where review_key: "+review_key+" | new status: "+newStatus);
+    }
     private int getClientId(int clientId){
         sql = "SELECT id FROM client WHERE id="+clientId+";";
         try (Connection conn = connection.connect();
@@ -85,6 +89,7 @@ public class ReviewDaoJdbc implements ReviewDao {
     }
 
     private ArrayList<Review> createReviewModel(String sql){
+        ArrayList<Review> reviews = new ArrayList<>();
         try (Connection conn = connection.connect();
              Statement statement = conn.createStatement();
              ResultSet rs = statement.executeQuery(sql)){

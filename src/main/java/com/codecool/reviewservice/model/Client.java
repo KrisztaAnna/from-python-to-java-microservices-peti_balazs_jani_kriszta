@@ -60,4 +60,12 @@ public class Client {
     public String getEmail() {
         return email;
     }
+
+    @Override
+    public String toString(){
+        return String.format("" +
+                "Company name: %s\n" +
+                "Email address: %s\n" +
+                "API Key: %s\n", getName(), getEmail(), getAPIKey());
+    }
 }

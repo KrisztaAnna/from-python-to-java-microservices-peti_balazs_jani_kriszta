@@ -32,7 +32,7 @@ public class Review {
 //    Constructor with reviewKey
     public Review(int clientID, String productName, String comment, int rating, String reviewKey, String status) {
         this.clientID = clientID;
-        this.productName = handleProductName(productName);
+        this.productName = productName;
         this.comment = comment;
         this.rating = rating;
         this.reviewKey = reviewKey;
@@ -90,6 +90,12 @@ public class Review {
 
     @Override
     public String toString(){
-        return String.format("id: %s client_id: %s product_name: %s comment: %s ratings: %d review_key: %s status: %s",getId(),getClientID(),getProductName(),getComment(),getRating(),getReviewKey(),getStatus());
+        return String.format(
+                        "Client_id: %s \n" +
+                        "Product name: %s \n" +
+                        "Review: %s \n" +
+                        "Ratings: %d \n" +
+                        "Review Key: %s \n" +
+                        "Status: %s", getClientID(),getProductName(),getComment(),getRating(),getReviewKey(),getStatus());
     }
 }
