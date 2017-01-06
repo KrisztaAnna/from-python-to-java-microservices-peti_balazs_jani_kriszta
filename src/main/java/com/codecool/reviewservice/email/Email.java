@@ -77,8 +77,8 @@ public class Email {
                       "\n" +
                       review.toString() +
 
-                      "\n\nTo accept the review, click on the link below:\n http://localhost:8888/changeStatus/" + client.getAPIKey() + "/" + review.getReviewKey()+ "/approved" +
-                      "\nTo deny it from being displayed on your site, click on this one:\n http://localhost:8888/changeStatus/" + client.getAPIKey() + "/" + review.getReviewKey()+ "/denied" +
+                      "\n\nTo accept the review, click on the link below:\n http://localhost:61000/changeStatus/" + client.getAPIKey() + "/" + review.getReviewKey()+ "/approved" +
+                      "\nTo deny it from being displayed on your site, click on this one:\n http://localhost:61000/changeStatus/" + client.getAPIKey() + "/" + review.getReviewKey()+ "/denied" +
                       "\nBest regards,\n" +
                       "     Horseshoe Team";
 
