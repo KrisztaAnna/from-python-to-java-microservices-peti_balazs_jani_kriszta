@@ -9,8 +9,6 @@ import com.codecool.reviewservice.errorHandling.InvalidClient;
 import com.codecool.reviewservice.model.Client;
 import com.codecool.reviewservice.model.Review;
 import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 
@@ -18,16 +16,33 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-
+/**
+ * This class is for controlling everything related to product reviews.
+ *
+ * @author Kriszta
+ */
 public class ReviewController {
-    private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
-
     private static ReviewDao reviews = ReviewDaoJdbc.getInstance();
     private static ClientDao clients = ClientDaoJdbc.getInstance();
 
-
+    /**
+     * The route "/review/:APIKey/:productName/:comment/:ratings" leads here and the
+     * method newReview() handles new reviews submitted by users of the web shops.
+     * First it runs a validation whether the API key is valid and present in the database.
+     * If the API key is valid it creates a new Review object, adds it to the database and also passes it to
+     * a method from the Email class, called ReviewForModerationEmail().
+     * If the API key is invalid the method throws an InvalidClient exception.
+     * @param request
+     * @param response
+     * @return null
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidClient
+     * @see IOException
+     * @see URISyntaxException
+     * @see InvalidClient
+     */
     public static String newReview(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
-        System.out.println("kaki");
         String APIKey = request.params("APIKey");
 
         if (!validateClient(APIKey)) {
@@ -43,6 +58,23 @@ public class ReviewController {
         }
     }
 
+    /**
+     * The changeStatus() method is responsible for switching the status of the reviews in the database.
+     * By default every review is marked as PENDING and they can be set APPROVED or DENIED by the links provided in the emails
+     * sent to the clients.
+     * First the method runs a validation whether the API key is valid and present in the database by calling the validateClient() method.
+     * If the API key is valid it sets the status of the review and redirects the user to the "/newstatus" route.
+     * If the API key is invalid the method throws an InvalidClient exception.
+     * @param request
+     * @param response
+     * @return null
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidClient
+     * @see IOException
+     * @see URISyntaxException
+     * @see InvalidClient
+     */
     public static String changeStatus(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
         String APIKey = request.params("APIKey");
 
@@ -57,6 +89,19 @@ public class ReviewController {
         }
     }
 
+    /**
+     * This method is used to return all approved reviews submitted on the client's web page as a JSON string.
+     * Throws an InvalidClient exception if the API Key provided by the user is invalid.
+     * @param request
+     * @param response
+     * @return String
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidClient
+     * @see IOException
+     * @see URISyntaxException
+     * @see InvalidClient
+     */
     public static String getAllReviewFromClient(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
         ArrayList<String> reviewsOfClient = new ArrayList<>();
 
@@ -74,6 +119,19 @@ public class ReviewController {
         }
     }
 
+    /**
+     * This method is used to return all approved reviews of a specific product from the database as a JSON string.
+     * Throws an InvalidClient exception if the API Key provided by the user is invalid.
+     * @param request
+     * @param response
+     * @return String Returns all approved Review objects of a specific product as a JSON string.
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidClient
+     * @see IOException
+     * @see URISyntaxException
+     * @see InvalidClient
+     */
     public static String getAllReviewOfProduct(Request request, Response response) throws IOException, URISyntaxException, InvalidClient {
         String APIKey = request.params("APIKey");
         String productName = request.params("productName");
@@ -91,6 +149,12 @@ public class ReviewController {
         }
     }
 
+    /**
+     * This method is used for validating the clients by their API Key. If the API key is not in the database the method returns false,
+     * if it is in the database, the method returns true.
+     * @param APIKey
+     * @return Boolean
+     */
     private static boolean validateClient(String APIKey) {
         Client client = clients.getByAPIKey(APIKey);
         if (client == null) {
@@ -99,10 +163,20 @@ public class ReviewController {
         return true;
     }
 
+    /**
+     * This method is used to get a specific client's ID by their API Key.
+     * @param APIKey
+     * @return int Returns the ID of a client.
+     */
     private static int getClientID(String APIKey){
         return clients.getByAPIKey(APIKey).getId();
     }
 
+    /**
+     * This method is used to convert an ArrayList (which contains Review objects as strings) into JSON.
+     * @param list
+     * @return String
+     */
     private static String jsonify(ArrayList<String> list) {
         return new Gson().toJson(list);
     }
