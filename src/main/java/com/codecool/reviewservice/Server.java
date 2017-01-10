@@ -10,8 +10,19 @@ import java.sql.SQLException;
 
 import static spark.Spark.*;
 
+/**
+ * <h1>Horseshoe Review Services</h1>
+ * The Horseshoe Review Services is a cross-store review management system.
+ * The service provides a powerful solution to create, moderate and display product reviews in
+ * your online store with an integrated possibility to display approved reviews from other online
+ * stores as well.
+ * <p>
+ *
+ * @author  Jani Peti Balazs Kriszta
+ * @version 1.0
+ * @since   2017-01-06
+ */
 public class Server {
-
 
     public static void main(String[] args) throws SQLException {
         // connection to PostgreSQL Database
