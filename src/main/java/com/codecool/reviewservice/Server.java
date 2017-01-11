@@ -27,6 +27,12 @@ import static spark.Spark.*;
  */
 public class Server {
 
+    /**
+     * Creates the database connection, instantiates the template engine, sets up the Server settings,
+     * throws exception in case of a Server issue and also maps all the routes used in the application.
+     * @throws SQLException
+     * @see SQLException
+     */
     public static void main(String[] args) throws SQLException {
         // connection to PostgreSQL Database
         DBConnection dbConnection = new DBConnection();
