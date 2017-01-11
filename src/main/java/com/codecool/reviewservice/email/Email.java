@@ -90,7 +90,7 @@ public class Email {
     }
 
     /**
-     * newClientEmail() builds the body and subject of an Email object, specifically the email sent to the newly
+     * This method builds the body and subject of an Email object, specifically the email sent to the newly
      * registered clients. It initializes an Email object passes it to the sendMail() method which sends the email.
      * @param client A Client object.
      */
@@ -108,7 +108,7 @@ public class Email {
     }
 
     /**
-     * ReviewForModerationEmail() builds the body and subject of an Email object, specifically the email sent to the
+     * This method builds the body and subject of an Email object, specifically the email sent to the
      * client with a newly submitted product review in it. It initializes an Email object passes it to the sendMail()
      * method which sends the email.
      * @param review Review object.
@@ -134,7 +134,7 @@ public class Email {
     }
 
     /**
-     * sendEmail() sets the properties of the SMTP connection (Whis is in this case is gmail smtp connection) and then
+     * This method sets the properties of the SMTP connection (Whis is in this case is gmail smtp connection) and then
      * creates a Message object and sends it.
      * @param email An Email object.
      */
