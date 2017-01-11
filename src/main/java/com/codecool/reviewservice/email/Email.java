@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 
 /**
  * The Email class handles everything related the applications email-sending features.
+ * {@docRoot}
  * @author Kriszta
  */
 public class Email {
@@ -164,7 +165,7 @@ public class Email {
             Message msg = new MimeMessage(session);
 
             // -- Set the FROM and TO fields --
-            msg.setFrom(new InternetAddress("myhorseshoeisamazing@gmail.com"));
+            msg.setFrom(new InternetAddress(email.getFROM()));
             msg.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(email.getTo(), false));
             msg.setSubject(email.getSubject());
