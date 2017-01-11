@@ -26,14 +26,14 @@ public class ReviewController {
     private static ClientDao clients = ClientDaoJdbc.getInstance();
 
     /**
-     * The route "/review/:APIKey/:productName/:comment/:ratings" leads here and the
-     * method newReview() handles new reviews submitted by users of the web shops.
-     * First it runs a validation whether the API key is valid and present in the database.
+     * The "/review/:APIKey/:productName/:comment/:ratings" route leads here and newReview() handles new reviews
+     * submitted by users of the web shops.
+     * First it runs a validation whether the API key is valid.
      * If the API key is valid it creates a new Review object, adds it to the database and also passes it to
-     * a method from the Email class, called ReviewForModerationEmail().
+     * a method from the Email class, called ReviewForModerationEmail(), which sends an email to the client.
      * If the API key is invalid the method throws an InvalidClient exception.
-     * @param request
-     * @param response
+     * @param request A Spark request object
+     * @param response A Spark response object
      * @return null
      * @throws IOException
      * @throws URISyntaxException
@@ -65,8 +65,8 @@ public class ReviewController {
      * First the method runs a validation whether the API key is valid and present in the database by calling the validateClient() method.
      * If the API key is valid it sets the status of the review and redirects the user to the "/newstatus" route.
      * If the API key is invalid the method throws an InvalidClient exception.
-     * @param request
-     * @param response
+     * @param request A Spark request object
+     * @param response A Spark response object
      * @return null
      * @throws IOException
      * @throws URISyntaxException
@@ -92,8 +92,8 @@ public class ReviewController {
     /**
      * This method is used to return all approved reviews submitted on the client's web page as a JSON string.
      * Throws an InvalidClient exception if the API Key provided by the user is invalid.
-     * @param request
-     * @param response
+     * @param request A Spark request object
+     * @param response A Spark response object
      * @return String
      * @throws IOException
      * @throws URISyntaxException
@@ -122,8 +122,8 @@ public class ReviewController {
     /**
      * This method is used to return all approved reviews of a specific product from the database as a JSON string.
      * Throws an InvalidClient exception if the API Key provided by the user is invalid.
-     * @param request
-     * @param response
+     * @param request A Spark request object
+     * @param response A Spark response object
      * @return String Returns all approved Review objects of a specific product as a JSON string.
      * @throws IOException
      * @throws URISyntaxException

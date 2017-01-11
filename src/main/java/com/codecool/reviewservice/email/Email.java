@@ -18,7 +18,10 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-
+/**
+ * The Email class handles everything related the applications email-sending features.
+ * @author Kriszta
+ */
 public class Email {
     private static ReviewDao reviews = ReviewDaoJdbc.getInstance();
     private static ClientDao clients = ClientDaoJdbc.getInstance();
@@ -31,32 +34,66 @@ public class Email {
     String subject;
     String body;
 
+    /**
+     * Returns the "to" field of the Email object that contains the email address which the email is sent to.
+     * Usually the client's email address.
+     * @return String The 'to' email address.
+     */
     public String getTo() {
         return to;
     }
 
-    public String getFROM() {
+    /**
+     * Returns the "FROM" field of the Email object that contains the email address which the email is sent from.
+     * Usually the email address of the person, who is running this application.
+     * @return String The 'from' email address.
+     */
+    private String getFROM() {
         return FROM;
     }
 
-    public String getSubject() {
+    /**
+     * Returns the subject of the email object.
+     * @return String Subject
+     */
+    private String getSubject() {
         return subject;
     }
 
+    /**
+     * Returns the text of the message itself; the body attribute of the Email object.
+     * @return String The text of the email.
+     */
     public String getBody() {
         return body;
     }
 
-    public String getPassword() {
+    /**
+     * Returns the password of email address in the "FROM" field of the Email object
+     * @return String The password of the sender account.
+     */
+    private String getPassword() {
         return password;
     }
 
+    /**
+     * Constructor of the Email class. Needs three parameters to be passed to it in order to initialize an email
+     * object.
+     * @param to Email address of the receiver.
+     * @param subject Email address of the sender.
+     * @param body The text of the message.
+     */
     public Email(String to, String subject, String body) {
         this.to = to;
         this.subject = subject;
         this.body = body;
     }
 
+    /**
+     * newClientEmail() builds the body and subject of an Email object, specifically the email sent to the newly
+     * registered clients. It initializes an Email object passes it to the sendMail() method which sends the email.
+     * @param client A Client object.
+     */
     public static void newClientEmail (Client client) {
         String subject = "Welcome to the Horseshoe Review Service";
         String body = "Dear Madam/Sir,\n" +
@@ -70,6 +107,12 @@ public class Email {
         sendEmail(newEmail);
     }
 
+    /**
+     * ReviewForModerationEmail() builds the body and subject of an Email object, specifically the email sent to the
+     * client with a newly submitted product review in it. It initializes an Email object passes it to the sendMail()
+     * method which sends the email.
+     * @param review Review object.
+     */
     public static void ReviewForModerationEmail(Review review){
         Client client = clients.getById(review.getClientID());
 
@@ -90,6 +133,11 @@ public class Email {
 
     }
 
+    /**
+     * sendEmail() sets the properties of the SMTP connection (Whis is in this case is gmail smtp connection) and then
+     * creates a Message object and sends it.
+     * @param email An Email object.
+     */
     private static void sendEmail(Email email) {
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
         // Get a Properties object

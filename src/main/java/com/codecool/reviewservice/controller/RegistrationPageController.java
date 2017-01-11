@@ -15,7 +15,7 @@ import java.util.Map;
 public class RegistrationPageController {
     /**
      * RegistrationPageController is used to render the registration page of the application for clients.
-     * The route "/" calls this method.
+     * The route "/" leads to this method.
      * @param request
      * @param response
      * @return ModalAndView This returns a ModalAndView object which renders registration.html
