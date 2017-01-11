@@ -11,12 +11,15 @@ import java.sql.SQLException;
 import static spark.Spark.*;
 
 /**
- * <h1>Horseshoe Review Services</h1>
- * The Horseshoe Review Services is a cross-store review management system.
+ * <h1>Horseshoe Review Service</h1>
+ * The Horseshoe Review Service is a cross-store review management system.
  * The service provides a powerful solution to create, moderate and display product reviews in
  * your online store with an integrated possibility to display approved reviews from other online
  * stores as well.
  * <p>
+ * Clients need to register with Horseshoe Review Service by providing their company name and email address.
+ * After that, an email will be sent to them with their registration data and API Key, which is validated every time
+ * they wish to use the services of the Review Service.
  *
  * @author  Jani Peti Balazs Kriszta
  * @version 1.0
