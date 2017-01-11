@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class InvalidClient extends SQLException {
     /**
      * An exception that provides information on an APIKey error.
-     * @param s The message you want to display.
+     * @param s The description of the exception.
      */
     public InvalidClient(String s){
         super(s);
