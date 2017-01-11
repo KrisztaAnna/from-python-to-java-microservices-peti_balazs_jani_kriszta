@@ -26,9 +26,9 @@ public class ReviewController {
     private static ClientDao clients = ClientDaoJdbc.getInstance();
 
     /**
-     * The "/review/:APIKey/:productName/:comment/:ratings" route leads here and newReview() handles new reviews
+     * The "/review/:APIKey/:productName/:comment/:ratings" route triggers newReview() which handles new reviews
      * submitted by users of the web shops.
-     * First it runs a validation whether the API key is valid.
+     * First it runs a validation whether the API key is valid by calling the validateClient() method.
      * If the API key is valid it creates a new Review object, adds it to the database and also passes it to
      * a method from the Email class, called ReviewForModerationEmail(), which sends an email to the client.
      * If the API key is invalid the method throws an InvalidClient exception.
@@ -59,10 +59,11 @@ public class ReviewController {
     }
 
     /**
-     * The changeStatus() method is responsible for switching the status of the reviews in the database.
+     * The changeStatus() method is responsible for switching the status of the reviews in the database, it is triggered by the
+     * "/changeStatus/:APIKey/:reviewKey/:status" route in the Server.
      * By default every review is marked as PENDING and they can be set APPROVED or DENIED by the links provided in the emails
      * sent to the clients.
-     * First the method runs a validation whether the API key is valid and present in the database by calling the validateClient() method.
+     * First the method runs a validation whether the API key is valid by calling the validateClient() method.
      * If the API key is valid it sets the status of the review and redirects the user to the "/newstatus" route.
      * If the API key is invalid the method throws an InvalidClient exception.
      * @param request A Spark request object
@@ -91,6 +92,7 @@ public class ReviewController {
 
     /**
      * This method is used to return all approved reviews submitted on the client's web page as a JSON string.
+     * It is called through the "/reviewFromClient/:APIKey" route.
      * Throws an InvalidClient exception if the API Key provided by the user is invalid.
      * @param request A Spark request object
      * @param response A Spark response object
@@ -121,6 +123,7 @@ public class ReviewController {
 
     /**
      * This method is used to return all approved reviews of a specific product from the database as a JSON string.
+     * It is called by the "/allReviewOfProduct/:APIKey/:ProductName" route.
      * Throws an InvalidClient exception if the API Key provided by the user is invalid.
      * @param request A Spark request object
      * @param response A Spark response object
