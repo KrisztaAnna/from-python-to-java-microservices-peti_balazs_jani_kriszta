@@ -15,7 +15,16 @@ public class ClientController {
     private static ClientDao clientDao = ClientDaoJdbc.getInstance();
 
 
-    // create new client & save it to the database & sending registration email
+    /**
+     * This method is triggered by the "/newClient" route in the Server. It instantiates a
+     * new Client object, saves it into the database and sends an email to the new client
+     * which contains the client's registration data and the API Key which they will need later
+     * for using the API service.
+     * At the end it redirects to the "/success" route.
+     * @param request
+     * @param response
+     * @return
+     */
     // TODO: 2017.01.04. integrate email sending service
     public static ModelAndView newClient(Request request, Response response) {
         Client newClient = new Client(request.queryParams("name"), request.queryParams("email"));
