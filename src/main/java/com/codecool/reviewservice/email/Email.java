@@ -19,7 +19,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
- * The Email class handles everything related the applications email-sending features.
+ * The Email class handles everything related to the applications email-sending features.
  * {@docRoot}
  * @author Kriszta
  */
