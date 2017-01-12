@@ -36,8 +36,9 @@ public class DBConnection {
     }
 
     /**
-     * This method creates a Statement object and then calls the execute method on it with the query passed to it
-     * as a parameter. Throws
+     * This method executes the SQL queries throughout the application by creating a Statement object and
+     * then calling the execute method on it with the query (as a String) passed to it.
+     * as a parameter.
      * @param query String of the SQL query.
      */
     public void executeQuery(String query) {

@@ -50,7 +50,7 @@ public class ReviewController {
         } else {
             Review newReview = new Review(getClientID(APIKey),
                                           request.params("productName"),
-                                          request.params("comment"),
+                                          request.body(),
                                           Integer.parseInt(request.params("ratings")));
             reviews.add(newReview);
             Email.ReviewForModerationEmail(newReview);
@@ -123,7 +123,7 @@ public class ReviewController {
 
     /**
      * This method is used to return all approved reviews of a specific product from the database as a JSON string.
-     * It is called by the "/allReviewOfProduct/:APIKey/:ProductName" route.
+     * It is called through the "/allReviewOfProduct/:APIKey/:ProductName" route.
      * Throws an InvalidClient exception if the API Key provided by the user is invalid.
      * @param request A Spark request object
      * @param response A Spark response object
