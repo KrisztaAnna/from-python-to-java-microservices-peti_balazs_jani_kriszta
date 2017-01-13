@@ -8,6 +8,10 @@ import java.util.ResourceBundle;
 
 /**
  * Handles the connection to the PostgreSQL database and the execution of queries.
+ * To be able to use the application properly, first you need to create a file (connection.properties) in the 'resources' directory,
+ * and provide the following data: url=jdbc:postgresql://localhost:5432/review_service, user=yourPostgreSQLusername,
+ * password=yourPostgreSQLpassword
+ *
  * @author Kriszta
  */
 public class DBConnection {
@@ -16,7 +20,7 @@ public class DBConnection {
     private static String PASSWORD;
 
     /**
-     * Reads the postgres database info from connection.properties, and assigns them to the class attributes.
+     * Reads the PostgreSQL database info from connection.properties, and assigns them to the class attributes.
      */
     public DBConnection() {
         ResourceBundle rb = ResourceBundle.getBundle("connection"); // connection.properties
@@ -27,9 +31,9 @@ public class DBConnection {
 
     /**
      * Creates the database connection, using the class attributes as parameters.
-     * @return connection Returns the db connection.
+     * @return Returns the db connection.
      * @throws SQLException
-     * @see SQLException
+     * @see    SQLException
      */
     public Connection connect() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
@@ -37,9 +41,8 @@ public class DBConnection {
 
     /**
      * This method executes the SQL queries throughout the application by creating a Statement object and
-     * then calling the execute method on it with the query (as a String) passed to it.
-     * as a parameter.
-     * @param query String of the SQL query.
+     * then calling the execute method on it with the query (as a String) passed to it as an argument.
+     * @param query An SQL query as a string.
      */
     public void executeQuery(String query) {
         try (Connection connection = connect();

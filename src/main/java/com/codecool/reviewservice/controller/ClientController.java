@@ -10,6 +10,9 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+/**
+ * Class for controlling the registration of new Clients.
+ */
 public class ClientController {
     private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
     private static ClientDao clientDao = ClientDaoJdbc.getInstance();
@@ -21,9 +24,12 @@ public class ClientController {
      * which contains the client's registration data and the API Key which they will need later
      * for using the API service.
      * At the end it redirects to the "/success" route.
-     * @param request
-     * @param response
-     * @return
+     * @param request   a Spark request object
+     * @param response  a Spark response object
+     * @return          In a future verion this method will render a new view, at the moment it simply redirects to the following
+     *                  route: "/success"
+     * @see             ClientDao
+     * @see             Logger
      */
     // TODO: 2017.01.04. integrate email sending service
     public static ModelAndView newClient(Request request, Response response) {

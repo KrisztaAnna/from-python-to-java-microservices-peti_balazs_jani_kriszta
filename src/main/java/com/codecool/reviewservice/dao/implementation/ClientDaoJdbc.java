@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * This class implements the methods of the ClientDao interface. It is a singleton.
+ * This class implements the methods of the ClientDao interface. The class ClientDaoJdbc is a singleton.
  * @author Peti
  */
 public class ClientDaoJdbc implements ClientDao {
@@ -22,8 +22,8 @@ public class ClientDaoJdbc implements ClientDao {
     private String sql;
 
     /**
-     * This method is for getting or creating and returning the instance of the ClientDaoJdbc singleton.
-     * @return   the instance of the singleton
+     * This method is for getting or creating and and then returning the instance of the ClientDaoJdbc class.
+     * @return   the instance of the ClientDaoJdbc class
      */
     public static ClientDaoJdbc getInstance(){
         if(instance == null){
@@ -80,7 +80,7 @@ public class ClientDaoJdbc implements ClientDao {
     }
 
     /**
-     * This method implements the getgetByAPIKeyById method of the ClientDao interface. It is for returning a record from the Client model
+     * This method implements the getByAPIKey method of the ClientDao interface. It is for returning a record from the Client model
      * in the database. The method takes an ID integer as an argument and then executes the query which returns the record with
      * the matching ID from the database.
      * @param APIKey an unique hash belongs to every Client record in the database, this is the APIKey
@@ -95,8 +95,8 @@ public class ClientDaoJdbc implements ClientDao {
     }
 
     /**
-     * Takes an SQL query as an argument. When called it connects to the database, instantiates a Client object, sets it's ID and
-     * then returns it.
+     * Returns a Client object. The method takes an SQL query as a string as an argument. When called it connects to the database,
+     * instantiates the Client object, sets it's ID and then returns the objectg.
      * @param sql an SQL query as a String
      * @return    a Client object
      * @see       Client

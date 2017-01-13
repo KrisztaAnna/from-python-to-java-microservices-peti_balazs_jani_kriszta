@@ -20,7 +20,8 @@ import java.util.ResourceBundle;
 
 /**
  * The Email class handles everything related to the applications email-sending features.
- * {@docRoot}
+ * To be able to use the application properly, you need to create a file (emaildata.properties) in the 'resources' directory,
+ * and provide the following data: address=youremail@gmail.com, password=youremailaccountpassword
  * @author Kriszta
  */
 public class Email {
@@ -78,11 +79,11 @@ public class Email {
     }
 
     /**
-     * Constructor of the Email class. Needs three parameters to be passed to it in order to initialize an email
+     * Constructor of the Email class. Needs three parameters to be passed to it.
      * object.
-     * @param to Email address of the receiver.
+     * @param to      Email address of the receiver.
      * @param subject Email address of the sender.
-     * @param body The text of the message.
+     * @param body    The text of the message.
      */
     public Email(String to, String subject, String body) {
         this.to = to;
@@ -94,6 +95,7 @@ public class Email {
      * This method builds the body and subject of an Email object, specifically the email sent to the newly
      * registered clients. It initializes an Email object passes it to the sendMail() method which sends the email.
      * @param client A Client object.
+     * @see          Client
      */
     public static void newClientEmail (Client client) {
         String subject = "Welcome to the Horseshoe Review Service";
@@ -112,7 +114,8 @@ public class Email {
      * This method builds the body and subject of an Email object, specifically the email sent to the
      * client with a newly submitted product review in it. It initializes an Email object passes it to the sendMail()
      * method which sends the email.
-     * @param review Review object.
+     * @param review A Review object.
+     * @see          Client
      */
     public static void ReviewForModerationEmail(Review review){
         Client client = clients.getById(review.getClientID());
