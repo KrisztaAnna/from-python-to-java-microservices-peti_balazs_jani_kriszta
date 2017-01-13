@@ -25,9 +25,9 @@ public class ReviewDaoJdbc implements ReviewDao {
     private String sql;
 
     /**
-     * This method returns the instance of the ClientDaoJdbc singleton if it already exists. If not it instantiates
+     * This method returns the instance of the ClientDaoJdbc singleton if it already exists. If not, it instantiates
      * it and then returns it.
-     * @return   the instance of class ReviewDaoJdbc
+     * @return   The instance of the class ReviewDaoJdbc
      */
     public static ReviewDaoJdbc getInstance(){
         if (instance == null){
@@ -62,7 +62,7 @@ public class ReviewDaoJdbc implements ReviewDao {
      * This method implements the remove method of the ReviewDao interface. It is for removing a record from the Review
      * model in the database. The method takes a reviewKey as a string as an argument and then executes the query which
      * removes the record with the matching reviewKey from the database.
-     * @param reviewKey an unique hash belongs to every Review record in the database, this is the reviewKey
+     * @param reviewKey The unique hash belongs to the Review object.
      */
     public void remove(int reviewKey) {
         sql = "DELETE FROM review WHERE review_key='"+reviewKey+"';";
@@ -98,6 +98,7 @@ public class ReviewDaoJdbc implements ReviewDao {
     }
 
     /**
+     * This method implements the getApprovedByProductName method of the ReviewDao interface.
      * Returns an ArrayList of Review objects. Takes a productName as an argument and returns all the approved reviews
      * of that particular product from all the clients.
      * @param productName the name of a product
@@ -125,8 +126,8 @@ public class ReviewDaoJdbc implements ReviewDao {
     /**
      * This method is used for updating the status if the reviews. The first argument it takes is a review key which is
      * used for finding the actual record in database table, and the second one is the new status we want to set.
-     * @param reviewKey an unique hash belongs to every Review record in the database, this is the reviewKey
-     * @param newStatus
+     * @param reviewKey The unique hash to the Review object
+     * @param newStatus The new status of the review. It is either APPROVED or DENIED.
      */
     public void updateStatus(String reviewKey, String newStatus){
         sql = "UPDATE review SET status='"+newStatus+"' WHERE review_key='"+reviewKey+"';";

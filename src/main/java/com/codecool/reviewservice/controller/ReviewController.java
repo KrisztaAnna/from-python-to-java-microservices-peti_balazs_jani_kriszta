@@ -98,7 +98,7 @@ public class ReviewController {
      * Throws an InvalidClient exception if the API Key provided by the client is invalid.
      * @param request A Spark request object
      * @param response A Spark response object
-     * @return String
+     * @return Returns a Review objects as JSON string.
      * @throws IOException
      * @throws URISyntaxException
      * @throws InvalidClient
@@ -130,7 +130,7 @@ public class ReviewController {
      * Throws an InvalidClient exception if the API Key provided by the client is invalid.
      * @param request A Spark request object
      * @param response A Spark response object
-     * @return String Returns all approved Review objects of a specific product as a JSON string.
+     * @return Returns all approved Review objects of a specific product as a JSON string.
      * @throws IOException
      * @throws URISyntaxException
      * @throws InvalidClient
@@ -172,7 +172,7 @@ public class ReviewController {
     /**
      * This method is used for getting a specific client's ID by their API Key.
      * @param APIKey an unique hash belongs to every Client record in the database, this is the APIKey
-     * @return int Returns the ID of a client.
+     * @return  Returns the ID of a client as an Integer.
      */
     private static int getClientID(String APIKey){
         return clients.getByAPIKey(APIKey).getId();
@@ -181,7 +181,7 @@ public class ReviewController {
     /**
      * This method is used for converting an ArrayList (which contains Review objects as strings) into JSON.
      * @param reviews Review objects as strings in an ArrayList
-     * @return a JSON string of review objects.
+     * @return Review objects as JSON string.
      */
     private static String jsonify(ArrayList<String> reviews) {
         return new Gson().toJson(reviews);

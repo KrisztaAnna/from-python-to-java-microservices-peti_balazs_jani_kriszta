@@ -1,7 +1,9 @@
 package com.codecool.reviewservice.model;
 
 /**
- * Created by komlancz on 2017.01.03..
+ * Defines the possibles statuses for a Review object.
+ * @author Jani
+ * @see Review
  */
 public enum Status {
     PENDING, APPROVED, DENIED;

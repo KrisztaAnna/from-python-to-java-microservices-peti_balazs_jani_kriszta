@@ -3,8 +3,8 @@ package com.codecool.reviewservice.dao;
 import com.codecool.reviewservice.model.Client;
 
 /**
- * ClientDao is an interface which provides specific data operations on the Client model.
- * Find further comments on its methods in its in implementation in the ClientDaoJdbc class.
+ * ClientDao is an interface which provides methods for specific data operations on the Client model.
+ * Find further comments on its methods along their implementations in the ClientDaoJdbc class.
  * @author Peti
  */
 public interface ClientDao {
