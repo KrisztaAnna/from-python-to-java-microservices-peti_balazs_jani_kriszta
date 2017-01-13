@@ -37,6 +37,7 @@ public class ClientDaoJdbc implements ClientDao {
      * This method implements the add method of the ClientDao interface. It is for adding a new record to the Client model
      * in the database. The method takes a client object as an argument and then executes the query which adds it to the database.
      * @param  clientModel  a Client object
+     * @see                 Client
      */
     @Override
     public void add(Client clientModel) {
@@ -54,7 +55,7 @@ public class ClientDaoJdbc implements ClientDao {
      * This method implements the remove method of the ClientDao interface. It is for removing a record from the Client model
      * in the database. The method takes an APIKey string as an argument and then executes the query which removes the record
      * with the matching APIKey from the database.
-     * @param APIKey an APIKey string
+     * @param APIKey an unique hash belongs to every Client record in the database, this is the APIKey
      */
     @Override
     public void remove(String APIKey) {
@@ -82,7 +83,7 @@ public class ClientDaoJdbc implements ClientDao {
      * This method implements the getgetByAPIKeyById method of the ClientDao interface. It is for returning a record from the Client model
      * in the database. The method takes an ID integer as an argument and then executes the query which returns the record with
      * the matching ID from the database.
-     * @param APIKey an APIKey string
+     * @param APIKey an unique hash belongs to every Client record in the database, this is the APIKey
      * @return       a Client object
      * @see          Client
      */
@@ -94,7 +95,7 @@ public class ClientDaoJdbc implements ClientDao {
     }
 
     /**
-     * Takes an sql String as an argument. When called it connects to the database, instantiates a Client object, sets it's ID and
+     * Takes an SQL query as an argument. When called it connects to the database, instantiates a Client object, sets it's ID and
      * then returns it.
      * @param sql an SQL query as a String
      * @return    a Client object
