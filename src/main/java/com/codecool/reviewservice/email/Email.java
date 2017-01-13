@@ -49,7 +49,7 @@ public class Email {
      * Usually the email address of the person, who is running this application.
      * @return String The 'from' email address.
      */
-    private String getFROM() {
+    private String getFrom() {
         return FROM;
     }
 
@@ -157,7 +157,7 @@ public class Email {
             Session session = Session.getDefaultInstance(props,
                     new Authenticator() {
                         protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(email.getFROM(), email.getPassword());
+                            return new PasswordAuthentication(email.getFrom(), email.getPassword());
                         }
                     });
 
@@ -165,7 +165,7 @@ public class Email {
             Message msg = new MimeMessage(session);
 
             // -- Set the FROM and TO fields --
-            msg.setFrom(new InternetAddress(email.getFROM()));
+            msg.setFrom(new InternetAddress(email.getFrom()));
             msg.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(email.getTo(), false));
             msg.setSubject(email.getSubject());

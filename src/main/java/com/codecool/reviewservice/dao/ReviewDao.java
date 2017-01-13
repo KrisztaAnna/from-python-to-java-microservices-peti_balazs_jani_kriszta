@@ -7,6 +7,7 @@ import java.util.ArrayList;
 /**
  * ReviewDao is an interface which provided specific data operations on the Review model.
  * Find further comments on its methods in its in implementation in the ReviewDaoJdbc class.
+ * @author Jani
  */
 public interface ReviewDao {
     void add(Review reviewModel);

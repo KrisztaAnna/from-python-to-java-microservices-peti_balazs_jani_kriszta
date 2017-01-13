@@ -32,7 +32,7 @@ public class ReviewController {
      * If the API key is valid it creates a new Review object, adds it to the database and also passes it to
      * a method from the Email class, called ReviewForModerationEmail(), which sends an email to the client.
      * If the API key is invalid the method throws an InvalidClient exception.
-     * @param request A Spark request object
+     * @param request  A Spark request object
      * @param response A Spark response object
      * @return null
      * @throws IOException
@@ -91,7 +91,7 @@ public class ReviewController {
     }
 
     /**
-     * This method is used to return all approved reviews submitted on the client's web page as a JSON string.
+     * This method is used for returning all approved reviews submitted on the client's web page as a JSON string.
      * It is called through the "/reviewFromClient/:APIKey" route.
      * Throws an InvalidClient exception if the API Key provided by the user is invalid.
      * @param request A Spark request object
@@ -122,7 +122,7 @@ public class ReviewController {
     }
 
     /**
-     * This method is used to return all approved reviews of a specific product from the database as a JSON string.
+     * This method is used for returning all approved reviews of a specific product from the database as a JSON string.
      * It is called through the "/allReviewOfProduct/:APIKey/:ProductName" route.
      * Throws an InvalidClient exception if the API Key provided by the user is invalid.
      * @param request A Spark request object
@@ -155,7 +155,7 @@ public class ReviewController {
     /**
      * This method is used for validating the clients by their API Key. If the API key is not in the database the method returns false,
      * if it is in the database, the method returns true.
-     * @param APIKey
+     * @param APIKey An APIKey string
      * @return Boolean
      */
     private static boolean validateClient(String APIKey) {
@@ -167,7 +167,7 @@ public class ReviewController {
     }
 
     /**
-     * This method is used to get a specific client's ID by their API Key.
+     * This method is used for getting a specific client's ID by their API Key.
      * @param APIKey
      * @return int Returns the ID of a client.
      */
@@ -176,12 +176,12 @@ public class ReviewController {
     }
 
     /**
-     * This method is used to convert an ArrayList (which contains Review objects as strings) into JSON.
-     * @param list
+     * This method is used for converting an ArrayList (which contains Review objects as strings) into JSON.
+     * @param reviews
      * @return String
      */
-    private static String jsonify(ArrayList<String> list) {
-        return new Gson().toJson(list);
+    private static String jsonify(ArrayList<String> reviews) {
+        return new Gson().toJson(reviews);
     }
 
 }
