@@ -21,7 +21,7 @@ public class Review {
     private String reviewKey;
 
     /**
-     * This constructor is used when a new review is submitted to the Review Service and a Review object is
+     * This constructor is used when a new review is submitted to the Review Service and a Review object is being
      * initialized for the first time, based on the data coming from the clients' web pages. This means that
      * the review doesn't have a hash (=reviewKey) in the database yet, so this constructor assigns one to it.
      * The status of a newly created Review object is always PENDING.
