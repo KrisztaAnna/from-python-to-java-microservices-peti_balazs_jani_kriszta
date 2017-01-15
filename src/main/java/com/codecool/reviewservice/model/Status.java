@@ -1,7 +1,7 @@
 package com.codecool.reviewservice.model;
 
 /**
- * Defines the possibles statuses for a Review object.
+ * Defines the possible statuses for a Review object.
  * @author Jani
  * @see Review
  */
